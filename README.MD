@@ -22,7 +22,7 @@
   - [Adaptive RAG: Smart Retrieval from DOC or LLM](#7-adaptive-rag-smart-retrieval-from-doc-or-llm)
   - [Fusion RAG: MultiSource-MultiRetrieval-MultiLingual](#8-fusion-rag-multisource-multiretrieval-multilingual)
   - [REFEED (Retrieval Feedback) HR Policy Fine-Tuning Without Training](#9-refeed-retrieval-feedback-hr-policy-fine-tuning-without-training)
-  - [Graph RAG (CSV Structure KB) Neo4j Aura Connection (#9-Graph_RAG_AquazitionNexusTrace_MA_CSV_Neo4j_Intelligence_Aura)
+  - [Graph RAG (CSV Structure KB) Neo4j Aura Connection](#10-graph-rag-csv-structure-kb-neo4j-aura-connection)
 - [🛠️ Installation](#installation)
 - [📊 Performance Comparison](#performance-comparison)
 - [🚀 Quick Start](#quick-start)
@@ -37,7 +37,7 @@
 
 ## 🎯 Overview
 
-This repository showcases **nine advanced RAG implementations** that push the boundaries of traditional retrieval-augmented generation. Each implementation tackles specific challenges in document understanding, multimodal processing, and intelligent information retrieval.
+This repository showcases **ten advanced RAG implementations** that push the boundaries of traditional retrieval-augmented generation. Each implementation tackles specific challenges in document understanding, multimodal processing, and intelligent information retrieval.
 
 ### 🌟 Key Features
 
@@ -49,6 +49,7 @@ This repository showcases **nine advanced RAG implementations** that push the bo
 - **Adaptive Retrieval**: Dynamic strategy selection for optimal performance
 - **Multisource Retrieval**: Combining multiple data sources and retrieval methods
 - **Feedback-Driven Fine-Tuning**: Enhancing performance without traditional training
+- **Graph Intelligence**: Knowledge graph construction and traversal over structured CSV data via Neo4j Aura
 
 ---
 
@@ -90,6 +91,8 @@ graph TD
 - `FAISS` for similarity search
 - `Groq LLaMA` for generation
 
+---
+
 ### 2. MultiModal RAG with CLIP Image Embedding
 
 **🎯 Purpose**: Unified text and image understanding using CLIP embeddings
@@ -123,6 +126,8 @@ graph TD
 - `sentence-transformers` for text embeddings
 - `OpenAI GPT-4` for generation
 
+---
+
 ### 3. Speculative RAG with News Outlet Summary
 
 **🎯 Purpose**: Fast draft generation with verification for real-time news processing
@@ -154,6 +159,8 @@ graph TD
 - `BART` for fast summarization
 - `Groq LLaMA 70B` for verification
 - `NewsAPI` for real-time data
+
+---
 
 ### 4. Corrective RAG
 
@@ -187,6 +194,8 @@ graph TD
 - `ConversationBufferMemory` for context
 - `Pydantic` for structured output
 
+---
+
 ### 5. Self-RAG
 
 **🎯 Purpose**: Self-improving RAG system with internal knowledge accumulation
@@ -219,6 +228,8 @@ graph TD
 - `LLaMA 70B` for editing
 - `FAISS` for dual storage
 - `MMR` for diverse retrieval
+
+---
 
 ### 6. Agentic RAG
 
@@ -256,6 +267,8 @@ graph TD
 - `GPT-4` for high-quality generation
 - `InMemorySaver` for state persistence
 
+---
+
 ### 7. Adaptive RAG: Smart Retrieval from DOC or LLM
 
 **🎯 Purpose**: Dynamically selects between document-based retrieval and LLM-generated content based on query complexity and context
@@ -289,6 +302,8 @@ graph TD
 - `FAISS` for document retrieval
 - `Groq LLaMA 70B` for content generation
 - `sentence-transformers` for embeddings
+
+---
 
 ### 8. Fusion RAG: MultiSource-MultiRetrieval-MultiLingual
 
@@ -331,6 +346,8 @@ graph TD
 - `FAISS` and `BM25` for retrieval
 - `mBART` for multilingual generation
 
+---
+
 ### 9. REFEED (Retrieval Feedback) HR Policy Fine-Tuning Without Training
 
 **🎯 Purpose**: Enhances RAG performance for HR policy queries using retrieval feedback without retraining the model
@@ -364,6 +381,121 @@ graph TD
 - `Groq LLaMA 70B` for generation
 - `Pydantic` for structured feedback
 - `ConversationBufferMemory` for feedback storage
+
+---
+
+### 10. Graph RAG (CSV Structure KB) Neo4j Aura Connection
+
+**🎯 Purpose**: Constructs a knowledge graph from structured CSV data (AcquisitionNexusTrace M&A dataset) and performs intelligent graph-traversal-based RAG using a live Neo4j Aura cloud instance
+
+> 📁 Notebook: `#10-Graph_RAG_AquazitionNexusTrace_MA_CSV_Neo4j_Intelligence_Aura`
+
+```mermaid
+graph TD
+    A[CSV Dataset - M&A Records] --> B[Data Parsing & Cleaning]
+    B --> C[Entity Extraction]
+    C --> D[Acquirer Nodes]
+    C --> E[Target Company Nodes]
+    C --> F[Deal Attribute Nodes]
+    D --> G[Neo4j Aura Cloud DB]
+    E --> G
+    F --> G
+    G --> H[Cypher Query Engine]
+    H --> I[LangChain Neo4j Graph Chain]
+    I --> J[Natural Language Query]
+    J --> K[NL-to-Cypher Translation]
+    K --> L[Graph Traversal & Retrieval]
+    L --> M[Subgraph Context]
+    M --> N[LLM Augmented Generation]
+    N --> O[M&A Intelligence Response]
+
+    style A fill:#e3f2fd
+    style G fill:#f3e5f5
+    style K fill:#fff3e0
+    style O fill:#e8f5e8
+```
+
+**🔑 Key Features**:
+- **CSV-to-Graph ingestion** — structured M&A records parsed into nodes and relationships in Neo4j Aura
+- **Live cloud graph database** connection via Neo4j Aura for scalable, persistent knowledge storage
+- **Natural language to Cypher** translation enabling non-technical querying of graph data
+- **Entity-relationship traversal** for multi-hop reasoning across acquirer → target → deal chains
+- **M&A intelligence extraction** — surfaces patterns, deal structures, and company linkages invisible to flat-file retrieval
+- **LangChain Neo4j integration** via `GraphCypherQAChain` for seamless LLM ↔ graph interaction
+
+**📊 Technical Stack**:
+- `pandas` for CSV parsing and preprocessing
+- `neo4j` Python driver for Aura cloud connection
+- `LangChain Neo4jGraph` for graph schema introspection
+- `GraphCypherQAChain` for NL-to-Cypher RAG pipeline
+- `Groq LLaMA 70B` for generation
+- `Neo4j Aura` as the managed cloud graph database
+
+**🗂️ Dataset — AcquisitionNexusTrace (M&A)**:
+
+The dataset models mergers & acquisitions with rich relational structure, making it ideal for graph-based intelligence:
+
+| Column | Description |
+|--------|-------------|
+| `Acquirer` | Company initiating the acquisition |
+| `Target` | Company being acquired |
+| `Deal_Value_USD` | Transaction value in USD |
+| `Deal_Date` | Date of deal announcement/close |
+| `Industry` | Sector classification |
+| `Deal_Type` | Merger, Acquisition, Takeover, etc. |
+| `Status` | Completed, Pending, Cancelled |
+| `Advisor` | Financial/legal advisors involved |
+
+**🔗 Graph Schema**:
+
+```
+(:Company {name, industry, country})
+  -[:ACQUIRED {deal_value, deal_date, deal_type, status}]->
+(:Company {name, industry, country})
+
+(:Company)-[:ADVISED_BY]->(:Advisor {name, type})
+(:Deal {id, value, date, type})-[:IN_SECTOR]->(:Industry {name})
+```
+
+**💡 Example Queries**:
+
+```cypher
+-- Find all acquisitions above $1B in the Technology sector
+MATCH (a:Company)-[r:ACQUIRED]->(t:Company)
+WHERE r.deal_value > 1000000000 AND t.industry = 'Technology'
+RETURN a.name, t.name, r.deal_value, r.deal_date
+ORDER BY r.deal_value DESC
+
+-- Multi-hop: Companies acquired by firms that were themselves acquired
+MATCH (a:Company)-[:ACQUIRED]->(b:Company)-[:ACQUIRED]->(c:Company)
+RETURN a.name AS top_acquirer, b.name AS intermediate, c.name AS final_target
+```
+
+**📊 Quick Start**:
+
+```python
+from advanced_rag import GraphRAG
+
+# Connect to Neo4j Aura instance
+grag = GraphRAG(
+    csv_path="acquisitionnexustrace_ma.csv",
+    neo4j_uri="neo4j+s://<your-aura-instance>.databases.neo4j.io",
+    neo4j_user="neo4j",
+    neo4j_password="<your-password>",
+    llm_model="groq/llama-70b"
+)
+
+# Ingest CSV into Neo4j as a knowledge graph
+grag.build_graph()
+
+# Query using natural language
+response = grag.query(
+    "Which technology companies were acquired for over $500M in 2023?"
+)
+print(f"Answer: {response.answer}")
+print(f"Cypher Used: {response.cypher_query}")
+print(f"Nodes Traversed: {response.graph_path}")
+```
 
 ---
 
@@ -406,6 +538,9 @@ langgraph>=0.0.40
 polars>=0.20.0
 langdetect>=1.0.9
 mbart>=0.1.0
+neo4j>=5.0.0
+langchain-neo4j>=0.1.0
+pandas>=2.0.0
 ```
 
 ---
@@ -423,6 +558,7 @@ mbart>=0.1.0
 | **Adaptive RAG** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ❌ | ✅ | High |
 | **Fusion RAG** | ⭐⭐⭐ | ⭐⭐⭐⭐ | ✅ | ❌ | Very High |
 | **REFEED RAG** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ❌ | ✅ | High |
+| **Graph RAG** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ❌ | ✅ | Very High |
 
 ---
 
@@ -565,6 +701,31 @@ print(f"Answer: {response.answer}")
 print(f"Feedback Stored: {response.feedback_id}")
 ```
 
+### 7. Graph RAG (Neo4j Aura)
+
+```python
+from advanced_rag import GraphRAG
+
+# Connect to Neo4j Aura and ingest CSV
+grag = GraphRAG(
+    csv_path="acquisitionnexustrace_ma.csv",
+    neo4j_uri="neo4j+s://<your-aura-instance>.databases.neo4j.io",
+    neo4j_user="neo4j",
+    neo4j_password="<your-password>",
+    llm_model="groq/llama-70b"
+)
+
+# Build knowledge graph from CSV
+grag.build_graph()
+
+# Natural language query over graph
+response = grag.query(
+    "Which technology companies were acquired for over $500M in 2023?"
+)
+print(f"Answer: {response.answer}")
+print(f"Cypher Used: {response.cypher_query}")
+```
+
 ---
 
 ## 📈 Future Roadmap
@@ -587,6 +748,9 @@ Based on the [25 Types of RAG](https://medium.com/projectpro/25-types-of-rag-whi
 - [ ] **Causal RAG** - Causal relationship understanding
 - [ ] **Federated RAG** - Distributed knowledge systems
 - [ ] **Quantum RAG** - Quantum-inspired retrieval
+
+#### Phase 4 (Q1 2025)
+- [x] **Graph RAG** - Knowledge graph construction and traversal over structured CSV data
 
 ### 🔧 Technical Enhancements
 
@@ -626,10 +790,13 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 - [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
 - [Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection](https://arxiv.org/abs/2310.11511)
 - [Corrective Retrieval Augmented Generation](https://arxiv.org/abs/2401.15884)
+- [From Local to Global: A Graph RAG Approach to Query-Focused Summarization](https://arxiv.org/abs/2404.16130)
 
 ### 🔗 Useful Links
 - [LangChain Documentation](https://python.langchain.com/)
 - [RAGAS Framework](https://docs.ragas.io/)
+- [Neo4j Aura Cloud](https://neo4j.com/cloud/platform/aura-graph-database/)
+- [LangChain Neo4j Integration](https://python.langchain.com/docs/integrations/graphs/neo4j_cypher/)
 - [25 Types of RAG Analysis](https://medium.com/projectpro/25-types-of-rag-which-one-fits-your-project-best-819d99b42d1a)
 
 ---
@@ -647,6 +814,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **OpenAI** for CLIP and GPT models
 - **Groq** for fast inference capabilities
 - **RAGAS** team for evaluation metrics
+- **Neo4j** for the Aura cloud graph database platform
 
 ---
 
