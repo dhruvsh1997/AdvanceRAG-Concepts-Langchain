@@ -22,6 +22,7 @@
   - [Adaptive RAG: Smart Retrieval from DOC or LLM](#7-adaptive-rag-smart-retrieval-from-doc-or-llm)
   - [Fusion RAG: MultiSource-MultiRetrieval-MultiLingual](#8-fusion-rag-multisource-multiretrieval-multilingual)
   - [REFEED (Retrieval Feedback) HR Policy Fine-Tuning Without Training](#9-refeed-retrieval-feedback-hr-policy-fine-tuning-without-training)
+  - [Graph RAG (CSV Structure KB) Neo4j Aura Connection (#9-Graph_RAG_AquazitionNexusTrace_MA_CSV_Neo4j_Intelligence_Aura)
 - [🛠️ Installation](#installation)
 - [📊 Performance Comparison](#performance-comparison)
 - [🚀 Quick Start](#quick-start)
