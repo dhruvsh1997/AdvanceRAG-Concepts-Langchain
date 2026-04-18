@@ -55,7 +55,7 @@ This repository showcases **ten advanced RAG implementations** that push the bou
 
 ## 🔧 RAG Implementations
 
-### 1. RAG with Metadata & Document Layout Analysis
+### 1. RAG with Metadata & Document Layouts Analysis
 
 **🎯 Purpose**: Intelligent document parsing with layout understanding and metadata preservation
 
