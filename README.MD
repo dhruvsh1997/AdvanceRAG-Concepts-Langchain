@@ -26,7 +26,7 @@
 - [🛠️ Installation](#installation)
 - [📊 Performance Comparison](#performance-comparison)
 - [🚀 Quick Start](#quick-start)
-- [📈 Future Roadmap](#future-roadmap)
+- [📈 Future Roadmaps](#future-roadmaps)
 - [🤝 Contributing](#contributing)
 - [📚 Resources & References](#resources--references)
 - [📄 License](#license)
