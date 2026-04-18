@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-> A comprehensive collection of advanced Retrieval-Augmented Generation (RAG) implementations, exploring cutting-edge technique for document understanding, multimodal processing, and intelligent information retrieval.
+> A comprehensive collection of advanced Retrieval-Augmented Generation (RAG) implementations, exploring cutting-edge techniques for document understanding, multimodal processing, and intelligent information retrieval.
 
 ---
 
