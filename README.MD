@@ -9,7 +9,7 @@
 
 ---
 
-## 📚 Table of Contents
+## 📚 Table of Content
 
 - [🎯 Overview](#overview)
 - [🔧 RAG Implementations](#rag-implementations)
