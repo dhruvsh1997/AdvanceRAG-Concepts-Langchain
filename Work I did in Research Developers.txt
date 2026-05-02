@@ -1,0 +1,33 @@
+Work I did in Research Developers
+1. Query-Based Data Extraction Using BERT-based Autoencoder
+Why it stands out: This is your most modern and technically dense project — BERT + Autoencoder + Ontologies + PCA + clustering is a genuinely advanced NLP stack. It's also ongoing, which shows active work.
+How to write it:
+
+Built a query-based information retrieval system using a BERT-based Autoencoder enhanced with ontology-driven representations, PCA-based dimensionality reduction, and WaOA optimizer-guided clustering — achieving improved extraction accuracy over baseline deep learning models on structured knowledge domains.
+
+
+2. Natural Language Interface to SQL (Text-to-SQL) using Seq2SQL + PSO
+Why it stands out: Text-to-SQL is one of the hottest skills right now in the LLM/GenAI space. Adding PSO-based hyperparameter optimization shows depth beyond a basic implementation. Screams production relevance.
+How to write it:
+
+Developed an end-to-end NL-to-SQL pipeline using an optimized Seq2SQL model with PSO-based hyperparameter tuning, handling complex real-world natural language queries. Covered full lifecycle: data preprocessing, model training, evaluation, and deployment.
+
+3. Intent Classification using Neo4j Graph + NLP
+Most NLP models treat data as flat text. You worked with distributed, graph-structured data stored in Neo4j — that's a fundamentally different and more complex problem. Lead with that contrast.
+
+How to Write It
+
+Developed an NLP-based sentiment classification system for distributed text data stored in a Neo4j knowledge graph, combining graph-based data modeling with deep learning. Built the knowledge graph from a sentiment dataset, designed a graph traversal pipeline to feed structured relational context into the NLP model, and deployed the classifier on a distributed network architecture.
+
+4. Brain Tumor Detection & Segmentation Web App
+Why it stands out: Medical AI + a deployed web app makes this feel genuinely production-grade. U-Net for segmentation combined with DLNN for classification is a solid dual-model architecture. Recruiters love medical imaging projects.
+How to write it:
+
+Built and deployed a full-stack web application for brain tumor classification and segmentation using a hybrid U-Net (segmentation) + DLNN (classification) pipeline. Applied unsupervised clustering for label generation on unlabeled datasets, along with preprocessing and augmentation on MRI data.
+
+
+5. Plant Disease Detection API using Transfer Learning
+Why it stands out: It has an actual API — that one word makes it sound production-ready. ResNet V3 transfer learning on a manually collected dataset shows real engineering effort, not just a Kaggle run.
+How to write it:
+
+Designed and deployed a REST API for multi-class plant disease detection across vegetables and fruits using a fine-tuned ResNet-V3 transfer learning model. Manually collected and curated a large-scale disease dataset, with full preprocessing and augmentation pipeline, achieving strong generalization across plant categories.
