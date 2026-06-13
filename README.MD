@@ -134,7 +134,7 @@ graph TD
 
 ```mermaid
 graph TD
-    A[News Articles] --> B[Parent Document Chunking]
+    A[News Articles] --> B[Parent Documents Chunking]
     B --> C[FAISS Vector Store]
     C --> D[Parent Document Retriever]
     D --> E[Fast Draft Generation]
