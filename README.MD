@@ -13,7 +13,7 @@
 
 - [🎯 Overview](#overview)
 - [🔧 RAG Implementations](#rag-implementations)
-  - [RAG with Metadata & Document Layout Analysis](#1-rag-with-metadata--document-layout-analysis)
+  - [RAG with Metadatas & Document Layout Analysis](#1-rag-with-metadata--document-layout-analysis)
   - [MultiModal RAG with CLIP Image Embedding](#2-multimodal-rag-with-clip-image-embedding)
   - [Speculative RAG with News Outlet Summary](#3-speculative-rag-with-news-outlet-summary)
   - [Corrective RAG](#4-corrective-rag)
