@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-> A comprehensive collection of advanced Retrieval-Augmented Generation (RAG) implementations, exploring cutting-edge techniques for document understanding, multimodal processing, and intelligent information retrieval.
+> A comprehensive collection of advanced Retrieval-Augmented Generation (RAG) implementations, exploring cutting-edge technique for document understanding, multimodal processing, and intelligent information retrieval.
 
 ---
 
@@ -13,7 +13,7 @@
 
 - [🎯 Overview](#overview)
 - [🔧 RAG Implementations](#rag-implementations)
-  - [RAG with Metadata & Document Layout Analysis](#1-rag-with-metadata--document-layout-analysis)
+  - [RAG with Metadatas & Document Layout Analysis](#1-rag-with-metadata--document-layout-analysis)
   - [MultiModal RAG with CLIP Image Embedding](#2-multimodal-rag-with-clip-image-embedding)
   - [Speculative RAG with News Outlet Summary](#3-speculative-rag-with-news-outlet-summary)
   - [Corrective RAG](#4-corrective-rag)
@@ -134,7 +134,7 @@ graph TD
 
 ```mermaid
 graph TD
-    A[News Articles] --> B[Parent Document Chunking]
+    A[News Articles] --> B[Parent Documents Chunking]
     B --> C[FAISS Vector Store]
     C --> D[Parent Document Retriever]
     D --> E[Fast Draft Generation]
