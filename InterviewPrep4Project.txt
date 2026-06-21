@@ -1,0 +1,85 @@
+Now I have everything I need. Let me build the full explanation.Now let me create the full response with a visual flow diagram.---
+
+## How the system actually works
+
+**Exceed Equine** is an AI platform where users chat with virtual horse characters — each horse has a distinct personality, real racing records, and contextual awareness of its daily life, stable environment, and stablemates.
+
+### The core architecture
+
+At its heart, this is a **RAG (Retrieval-Augmented Generation) system** built on top of a **LangGraph state machine** with 7 nodes. Every message a user sends passes through all of them in sequence.
+
+**Where data lives:** A single Qdrant vector database (`horses_memory`) holds all knowledge for all horses, tagged by `horse_id` and `memory_type`. There are 7 memory types: general knowledge (from PDFs), facility info, equipment, human handlers, stablemates, BTR show summaries, and daily activity summaries. The daily and show data is synced in from MySQL via a background daemon thread on every chat turn — it's fire-and-forget so it never delays the response, and because every point is keyed by an MD5 hash of its content, re-running it never creates duplicates.
+
+**How a message gets answered:**
+
+1. The message hits the **guardrail classifier** first. It categorizes the message into one of 6 buckets. If it's off-topic, gibberish, a greeting, or a generic horse question — it gets a canned in-character reply and the pipeline ends there. Only `horse_memory` queries proceed further.
+
+2. **Intent resolution** rewrites the query into a search-friendly form, classifies what kind of memory is needed (daily activity vs race results vs facility questions etc.), and uses a local `dateparser` to extract any date references like "yesterday" or "last Friday." Date resolution is deliberately kept out of the LLM because the LLM was unreliable at relative date math.
+
+3. **Hierarchical retrieval** runs a 4-layer cascade: first it looks for exact-date daily chunks if a date was resolved, then does type-filtered semantic search, then falls back to all memory types if results are sparse, and finally injects the most recent daily summary if none made it in. After retrieval, an LLM listwise reranker picks the top 8 documents.
+
+4. **Context assembly** groups those documents by memory type with clean section headers, and injects a `[NO DATA FOR <date>]` marker if a date was asked about but no matching chunks exist — giving the model a concrete anchor for its "I don't have that information" response rather than letting it hallucinate.
+
+5. **Generation** runs using decomposed prompts — a system prompt carrying the horse's personality, stablemate roster, weather, time-of-day activity, and strict grounding rules — plus a human turn template that slots in user profile, chat history, the question, and the retrieved context.
+
+6. **Quality evaluation** uses a second LLM call to score the answer 0–1. Below 0.75, it triggers a retry with expanded retrieval (no memory type filter, larger k) and a stricter prompt that forbids any creative gap-filling.
+
+---
+
+## How to explain this in an interview
+
+Here's a clean narrative that covers the high-value points without getting lost in implementation details:
+
+> "I built a **memory-driven RAG chatbot** for a platform called Exceed Equine, where users talk to AI-powered horse characters. The core problem was making each horse feel like it actually *knows things* — its racing history, who its handlers are, what it did yesterday — rather than giving generic LLM answers.
+>
+> The main technical pieces are:
+>
+> **Knowledge architecture:** I moved from a per-horse FAISS index to a central **Qdrant vector database** with a single collection shared by all horses. Every piece of knowledge is tagged with a `horse_id` and a `memory_type` — seven types like general knowledge, daily summaries, facility info, and stablemate details. This lets me retrieve very precisely instead of doing a single flat similarity search across everything.
+>
+> **Context engineering:** This was the biggest lift. I had to think carefully about what the model sees before it generates. I decomposed a single monolithic prompt into four separate prompts — a guardrail classifier, a system prompt, a human turn template, and a retry variant. The human turn template is structured with named sections: user profile, current context (weather, time of day, activity), conversation history, the question itself, and then the retrieved memory grouped by type with clear labels. The model always knows *what kind* of knowledge it's reading. There's also a hallucination guard — if the user asks about a specific date and nothing was retrieved for that date, the context block explicitly says `[NO DATA FOR <date>]` so the model doesn't invent an answer.
+>
+> **Retrieval pipeline:** I built a 4-layer retrieval cascade. The first layer handles date-pinned queries by scrolling *all* chunks for that exact date — critical for questions like 'what did you do yesterday?' where partial retrieval corrupts the answer. The second layer does type-filtered semantic search based on what the intent classifier determined. A third layer falls back to all memory types if results are sparse, and a fourth layer always injects the most recent daily summary so the horse has current-day awareness regardless of what was asked. After retrieval, I rerank using LLM listwise reranking.
+>
+> **Quality gate:** After generation, a second LLM call judges the answer on a 0–1 scale. Anything below 0.75 triggers a retry with broader retrieval and a stricter prompt that explicitly forbids the model from filling gaps creatively. This was crucial for accuracy — racing times, finish positions, and daily events need to be exact.
+>
+> **Pipeline orchestration:** The whole thing runs as a **LangGraph state machine** — 7 nodes with conditional edges. The guardrail node short-circuits most off-topic messages before any retrieval happens, which keeps costs down and prevents leaking generic LLM answers through the horse's character."
+
+---
+
+## Real problems I faced and how I fixed them
+
+**1. Duplicate vectors on every background sync**
+
+The background thread ran on every chat turn to keep daily summaries fresh. But each run was re-embedding and re-inserting the same content, creating duplicate vectors that degraded retrieval quality (the same chunk would rank multiple times, crowding out other results).
+
+**Fix:** Switched to MD5-based deterministic point IDs. The ID is computed as `md5(horse_id + memory_type + content)`. Qdrant upserts by ID, so re-inserting identical content just overwrites in place with no duplicates. This made the sync fully idempotent and safe to run on every request.
+
+**2. The LLM was unreliable at relative date math**
+
+When users asked "what did you do yesterday?" or "how was your race last Friday?", the LLM would sometimes interpret the date wrong, especially across timezone boundaries or week-boundary edge cases. It was an intermittent bug that was hard to reproduce and nearly impossible to prompt-engineer away.
+
+**Fix:** Removed date resolution from the LLM entirely. Built a dedicated local `resolve_query_date()` function using Python's `dateparser` library. It handles natural language dates like "yesterday", "two days ago", "April 5th" and returns a concrete `datetime.date`. The LLM never touches date math anymore — it only receives the resolved date as a formatted string.
+
+**3. Intent classification was too narrow, starving retrieval**
+
+The intent classifier would sometimes classify a question into a specific memory type (say, `daily_summary`) and the retrieval would come back with too few results because the data happened to live in `general` or `humans`. The model then either hallucinated or gave a very thin answer.
+
+**Fix:** Added a 3-layer fallback to the retrieval cascade. If Layers 1+2 return fewer than a floor threshold of documents, Layer 3 drops the `memory_type` filter and searches across all types. This catches the cases where intent classification was too narrow without abandoning type-filtering entirely for the well-classified majority of queries.
+
+**4. The v1 monolithic prompt was doing too many jobs at once**
+
+The original prompt had ~25 numbered rules covering guardrails, personality, grounding, date handling, and response format — all in one block. This led to rule conflicts and inconsistent behavior. The model would sometimes follow Rule 14 and violate Rule 8 because the two were in tension.
+
+**Fix:** Decomposed into four specialized prompts with a clear separation of concerns. The guardrail classifier only decides routing. The system prompt handles personality and grounding rules. The human turn template is pure context injection. The retry variant adds a strict override instruction at the top. No single prompt tries to be everything.
+
+**5. Show summaries and daily updates were string-pasted into the prompt**
+
+In v1, BTR show data and daily summaries were fetched from MySQL synchronously per request and hard-injected as string literals into the prompt. This meant they couldn't be semantically retrieved — the model always got them whether they were relevant or not. It also meant only the latest summary was ever available; there was no way to answer "what happened on Tuesday?" for an older date.
+
+**Fix:** Indexed all show summaries and daily summaries into Qdrant with `activity_date` as a payload field. Now they're retrieved like any other memory — semantically when no date is specified, or via exact-date scroll when a specific date is asked about. All historical data is accessible, not just the latest.
+
+**6. Video-to-memory accuracy issues (poetic narration vs flat narration)**
+
+The daily summary pipeline processed a short narration video alongside a long silent video. The narration was originally poetic/storytelling style, which introduced mismatches when the system tried to map events between the two videos. The enriched summaries had fabricated or misattributed segments.
+
+**Fix:** Switched the narration format to a "flat narration" style — a direct factual description of exactly what's visible. Updated the mapping prompt to be accuracy-first rather than narrative-richness-first. Because the flat narration has no intro/outro mismatch elements, every event maps 1:1 to the long video with no invented segments.
