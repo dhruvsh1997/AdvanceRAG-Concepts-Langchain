@@ -1,0 +1,481 @@
+# 🚀 Advanced RAG Experiments Repository
+
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![LangChain](https://img.shields.io/badge/LangChain-Latest-green.svg)](https://python.langchain.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+> A comprehensive collection of advanced Retrieval-Augmented Generation (RAG) implementations, exploring cutting-edge techniques for document understanding, multimodal processing, and intelligent information retrieval.
+
+---
+
+## 📚 Table of Contents
+
+- [🎯 Overview](#overview)
+- [🔧 RAG Implementations](#rag-implementations)
+  - [RAG with Metadata & Document Layout Analysis](#1-rag-with-metadata--document-layout-analysis)
+  - [MultiModal RAG with CLIP Image Embedding](#2-multimodal-rag-with-clip-image-embedding)
+  - [Speculative RAG with News Outlet Summary](#3-speculative-rag-with-news-outlet-summary)
+  - [Corrective RAG](#4-corrective-rag)
+  - [Self-RAG](#5-self-rag)
+  - [Agentic RAG](#6-agentic-rag)
+- [🛠️ Installation](#installation)
+- [📊 Performance Comparison](#performance-comparison)
+- [🚀 Quick Start](#quick-start)
+- [📈 Future Roadmap](#future-roadmap)
+- [🤝 Contributing](#contributing)
+- [📚 Resources & References](#resources--references)
+- [📄 License](#license)
+- [🙏 Acknowledgments](#acknowledgments)
+- [📊 Repository Statistics](#repository-statistics)
+
+---
+
+## 🎯 Overview
+
+This repository showcases **six advanced RAG implementations** that push the boundaries of traditional retrieval-augmented generation. Each implementation tackles specific challenges in document understanding, multimodal processing, and intelligent information retrieval.
+
+### 🌟 Key Features
+
+- **Advanced Document Processing**: Layout analysis, metadata extraction, and multi-column handling
+- **Multimodal Understanding**: Combined text and image processing with CLIP embeddings
+- **Self-Improving Systems**: Corrective and self-reflective RAG architectures
+- **Agentic Workflows**: Graph-based RAG with integrated evaluation metrics
+- **Production-Ready**: Robust error handling and optimization techniques
+
+---
+
+## 🔧 RAG Implementations
+
+### 1. RAG with Metadata & Document Layout Analysis
+
+**🎯 Purpose**: Intelligent document parsing with layout understanding and metadata preservation
+
+```mermaid
+graph TD
+    A[PDF Document] --> B[Document Layout Analysis]
+    B --> C[Column Detection]
+    B --> D[Image Extraction]
+    B --> E[Table Extraction]
+    C --> F[Text Chunking with Metadata]
+    D --> G[Image Processing]
+    E --> H[Table Processing]
+    F --> I[Vector Embedding]
+    G --> I
+    H --> I
+    I --> J[FAISS Vector Store]
+    J --> K[MMR Retrieval]
+    K --> L[Context with Metadata]
+    L --> M[LLM Generation]
+    M --> N[Response with Source Tracing]
+```
+
+**🔑 Key Features**:
+- **Two-column detection** for academic papers
+- **Metadata preservation** (page numbers, chunk IDs)
+- **Multi-asset extraction** (images, tables, text)
+- **Source traceability** in responses
+
+**📊 Technical Stack**:
+- `pdfplumber` for text extraction
+- `PyMuPDF` for image extraction
+- `HuggingFace Embeddings` for vectorization
+- `FAISS` for similarity search
+- `Groq LLaMA` for generation
+
+### 2. MultiModal RAG with CLIP Image Embedding
+
+**🎯 Purpose**: Unified text and image understanding using CLIP embeddings
+
+```mermaid
+graph TD
+    A[PDF Document] --> B[Text Extraction]
+    A --> C[Image Extraction]
+    B --> D[Text Chunking]
+    C --> E[Image Processing]
+    D --> F[CLIP Text Encoder]
+    E --> G[CLIP Image Encoder]
+    F --> H[Unified Vector Space]
+    G --> H
+    H --> I[FAISS Index]
+    I --> J[Multimodal Retrieval]
+    J --> K[Text + Image Context]
+    K --> L[GPT-4 Vision]
+    L --> M[Multimodal Response]
+```
+
+**🔑 Key Features**:
+- **CLIP-based embeddings** for text-image alignment
+- **Unified vector space** for multimodal search
+- **Visual context integration** in responses
+- **Cross-modal retrieval** capabilities
+
+**📊 Technical Stack**:
+- `OpenAI CLIP` for multimodal embeddings
+- `PIL` for image processing
+- `sentence-transformers` for text embeddings
+- `OpenAI GPT-4` for generation
+
+### 3. Speculative RAG with News Outlet Summary
+
+**🎯 Purpose**: Fast draft generation with verification for real-time news processing
+
+```mermaid
+graph TD
+    A[News Articles] --> B[Parent Document Chunking]
+    B --> C[FAISS Vector Store]
+    C --> D[Parent Document Retriever]
+    D --> E[Fast Draft Generation]
+    E --> F[BART Summarizer]
+    F --> G[Draft Summary]
+    G --> H[Verification LLM]
+    H --> I[Groq LLaMA 70B]
+    I --> J[Final Verified Summary]
+    
+    style E fill:#e1f5fe
+    style H fill:#f3e5f5
+```
+
+**🔑 Key Features**:
+- **Two-stage generation** (draft + verification)
+- **Parent document retrieval** for context preservation
+- **Fast local summarization** with BART
+- **Large model verification** with Groq
+
+**📊 Technical Stack**:
+- `ParentDocumentRetriever` for hierarchical retrieval
+- `BART` for fast summarization
+- `Groq LLaMA 70B` for verification
+- `NewsAPI` for real-time data
+
+### 4. Corrective RAG
+
+**🎯 Purpose**: Human-in-the-loop correction system for improved accuracy
+
+```mermaid
+graph TD
+    A[User Query] --> B[Initial RAG Retrieval]
+    B --> C[Gemma 9B Generation]
+    C --> D[Initial Response]
+    D --> E[User Feedback]
+    E --> F[Corrective Loop]
+    F --> G[Editor LLM]
+    G --> H[LLaMA 70B Correction]
+    H --> I[Improved Response]
+    I --> J[Memory Storage]
+    
+    style E fill:#ffebee
+    style G fill:#e8f5e8
+```
+
+**🔑 Key Features**:
+- **Dual LLM architecture** (generator + editor)
+- **Human feedback integration**
+- **Conversation memory** for context
+- **Iterative improvement** process
+
+**📊 Technical Stack**:
+- `Gemma 9B` for initial generation
+- `LLaMA 70B` for correction
+- `ConversationBufferMemory` for context
+- `Pydantic` for structured output
+
+### 5. Self-RAG
+
+**🎯 Purpose**: Self-improving RAG system with internal knowledge accumulation
+
+```mermaid
+graph TD
+    A[Initial Query] --> B[External Knowledge Base]
+    B --> C[RAG Generation]
+    C --> D[Editor Refinement]
+    D --> E[Internal Knowledge Store]
+    E --> F[Next Query]
+    F --> G{Sufficient Internal Knowledge?}
+    G -->|Yes| H[Use Internal Store]
+    G -->|No| B
+    H --> I[Self-Sufficient Generation]
+    I --> J[Continuous Learning]
+    
+    style E fill:#f0f4c3
+    style J fill:#e1f5fe
+```
+
+**🔑 Key Features**:
+- **Self-sufficient knowledge building**
+- **Dual retrieval system** (internal + external)
+- **Continuous learning** from outputs
+- **Adaptive retrieval** strategy
+
+**📊 Technical Stack**:
+- `Gemma 9B` for generation
+- `LLaMA 70B` for editing
+- `FAISS` for dual storage
+- `MMR` for diverse retrieval
+
+### 6. Agentic RAG
+
+**🎯 Purpose**: Graph-based RAG workflow with integrated evaluation metrics
+
+```mermaid
+graph TD
+    A[PDF Input] --> B[Setup Chain]
+    B --> C[Load PDF Node]
+    C --> D[Text Splitting Node]
+    D --> E[Embedding Node]
+    E --> F[LLM Config Node]
+    F --> G[RAG Chain Start]
+    G --> H[Retrieve Node]
+    H --> I[Augmentation Node]
+    I --> J[Dataset Setup Node]
+    J --> K[RAGAS Evaluation Node]
+    K --> L[Generation Node]
+    L --> M[Final Response + Metrics]
+    
+    style B fill:#e3f2fd
+    style K fill:#fff3e0
+    style M fill:#e8f5e8
+```
+
+**🔑 Key Features**:
+- **Graph-based workflow** with LangGraph
+- **Integrated RAGAS evaluation** for quality metrics
+- **Modular node architecture**
+- **State management** and checkpointing
+
+**📊 Technical Stack**:
+- `LangGraph` for workflow orchestration
+- `RAGAS` for evaluation metrics
+- `GPT-4` for high-quality generation
+- `InMemorySaver` for state persistence
+
+---
+
+## 🛠️ Installation
+
+### Prerequisites
+
+```bash
+Python 3.8+
+pip package manager
+```
+
+### Quick Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/advanced-rag-experiments.git
+cd advanced-rag-experiments
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Core Dependencies
+
+```txt
+langchain>=0.1.0
+langchain-community>=0.0.20
+langchain-groq>=0.0.5
+langchain-openai>=0.0.5
+faiss-cpu>=1.7.0
+sentence-transformers>=2.2.0
+transformers>=4.30.0
+pdfplumber>=0.9.0
+pymupdf>=1.23.0
+openai>=1.0.0
+groq>=0.4.0
+ragas>=0.1.0
+langgraph>=0.0.40
+polars>=0.20.0
+```
+
+---
+
+## 📊 Performance Comparison
+
+| RAG Type | Processing Speed | Accuracy | Multimodal | Self-Improving | Complexity |
+|----------|------------------|----------|------------|----------------|------------|
+| **Metadata RAG** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ❌ | ❌ | Medium |
+| **MultiModal RAG** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ✅ | ❌ | High |
+| **Speculative RAG** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ❌ | ❌ | Medium |
+| **Corrective RAG** | ⭐⭐ | ⭐⭐⭐⭐⭐ | ❌ | ✅ | High |
+| **Self-RAG** | ⭐⭐⭐ | ⭐⭐⭐⭐ | ❌ | ✅ | High |
+| **Agentic RAG** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ❌ | ✅ | Very High |
+
+---
+
+## 🚀 Quick Start
+
+### 1. Basic RAG with Metadata
+
+```python
+from advanced_rag import MetadataRAG
+
+# Initialize RAG system
+rag = MetadataRAG(
+    pdf_path="your_document.pdf",
+    chunk_size=1000,
+    embedding_model="all-MiniLM-L6-v2"
+)
+
+# Process document
+rag.process_document()
+
+# Query with source tracing
+response = rag.query(
+    "What is the main topic?",
+    include_metadata=True
+)
+print(f"Answer: {response.answer}")
+print(f"Sources: {response.sources}")
+```
+
+### 2. MultiModal RAG
+
+```python
+from advanced_rag import MultiModalRAG
+
+# Initialize with CLIP embeddings
+mmrag = MultiModalRAG(
+    pdf_path="document_with_images.pdf",
+    clip_model="openai/clip-vit-base-patch32"
+)
+
+# Process text and images
+mmrag.process_multimodal_content()
+
+# Query across modalities
+response = mmrag.query(
+    "Show me diagrams about network architecture",
+    include_images=True
+)
+```
+
+### 3. Agentic RAG with Evaluation
+
+```python
+from advanced_rag import AgenticRAG
+
+# Initialize with graph workflow
+arag = AgenticRAG(
+    pdf_path="technical_document.pdf",
+    evaluation_metrics=["faithfulness", "relevancy", "factual_correctness"]
+)
+
+# Run complete workflow
+result = arag.run_workflow(
+    question="Explain the main concepts",
+    thread_id="session_1"
+)
+
+print(f"Answer: {result.answer}")
+print(f"RAGAS Scores: {result.evaluation_scores}")
+```
+
+---
+
+## 📈 Future Roadmap
+
+### 🎯 Upcoming RAG Implementations
+
+Based on the [25 Types of RAG](https://medium.com/projectpro/25-types-of-rag-which-one-fits-your-project-best-819d99b42d1a) analysis, we're planning to implement:
+
+#### Phase 1 (Q2 2024)
+- [ ] **Hierarchical RAG** - Multi-level document understanding
+- [ ] **Fusion RAG** - Multiple retrieval strategy combination
+- [ ] **Contextual RAG** - Enhanced context preservation
+
+#### Phase 2 (Q3 2024)
+- [ ] **Temporal RAG** - Time-aware information retrieval
+- [ ] **Collaborative RAG** - Multi-agent collaboration
+- [ ] **Adaptive RAG** - Dynamic strategy selection
+
+#### Phase 3 (Q4 2024)
+- [ ] **Causal RAG** - Causal relationship understanding
+- [ ] **Federated RAG** - Distributed knowledge systems
+- [ ] **Quantum RAG** - Quantum-inspired retrieval
+
+### 🔧 Technical Enhancements
+
+- [ ] **Docker containerization** for easy deployment
+- [ ] **REST API** for production integration
+- [ ] **Benchmarking suite** for performance comparison
+- [ ] **GUI interface** for non-technical users
+- [ ] **Cloud deployment** guides (AWS, GCP, Azure)
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+### 🌟 How to Contribute
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-rag`)
+3. **Commit** your changes (`git commit -m 'Add amazing RAG implementation'`)
+4. **Push** to the branch (`git push origin feature/amazing-rag`)
+5. **Open** a Pull Request
+
+### 📝 Contribution Areas
+
+- **New RAG implementations** from the roadmap
+- **Performance optimizations** for existing systems
+- **Documentation improvements** and tutorials
+- **Bug fixes** and error handling
+- **Testing** and quality assurance
+
+---
+
+## 📚 Resources & References
+
+### 📖 Research Papers
+- [Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks](https://arxiv.org/abs/2005.11401)
+- [Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection](https://arxiv.org/abs/2310.11511)
+- [Corrective Retrieval Augmented Generation](https://arxiv.org/abs/2401.15884)
+
+### 🔗 Useful Links
+- [LangChain Documentation](https://python.langchain.com/)
+- [RAGAS Framework](https://docs.ragas.io/)
+- [25 Types of RAG Analysis](https://medium.com/projectpro/25-types-of-rag-which-one-fits-your-project-best-819d99b42d1a)
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **LangChain** team for the excellent framework
+- **Hugging Face** for transformer models
+- **OpenAI** for CLIP and GPT models
+- **Groq** for fast inference capabilities
+- **RAGAS** team for evaluation metrics
+
+---
+
+## 📊 Repository Statistics
+
+![GitHub Stars](https://img.shields.io/github/stars/yourusername/advanced-rag-experiments?style=social)
+![GitHub Forks](https://img.shields.io/github/forks/yourusername/advanced-rag-experiments?style=social)
+![GitHub Issues](https://img.shields.io/github/issues/yourusername/advanced-rag-experiments)
+![GitHub PRs](https://img.shields.io/github/issues-pr/yourusername/advanced-rag-experiments)
+
+---
+
+<div align="center">
+  <h3>🚀 Ready to explore the future of RAG?</h3>
+  <p>Star this repository and join our growing community of AI researchers and practitioners!</p>
+  
+  [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yourusername/advanced-rag-experiments)
+  [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourprofile)
+  [![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/yourhandle)
+</div>
+
+---
+
+*Last updated: January 2024*
